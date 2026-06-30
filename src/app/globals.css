@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* ── Pipeline theme — dark, résumé blue ──────────────────────────────────── */
+@theme {
+  --color-ink: #0a1020;
+  --color-ink-soft: #0e1728;
+  --color-panel: #131f36;
+  --color-line: #223252;
+  --color-muted: #8ba1c4;
+  --color-text: #dce7f6;
+
+  --color-pipe: #2c4068;
+  --color-success: #3ddc84;
+  --color-live: #34d399;
+  --color-running: #facc15;
+  --color-accent: #3b82f6; /* résumé blue */
+  --color-accent-2: #6aa8ff; /* lighter blue */
+
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-ink);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grid backdrop */
+.pipeline-grid {
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Animated "flow" dash along a pipe edge */
+@keyframes dashflow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.pipe-flow {
+  stroke-dasharray: 6 6;
+  animation: dashflow 0.9s linear infinite;
+}
+
+/* Pulsing live dot */
+@keyframes livepulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+  }
+}
+.live-dot {
+  animation: livepulse 1.8s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipe-flow,
+  .live-dot {
+    animation: none !important;
+  }
+}
