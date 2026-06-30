@@ -5,7 +5,7 @@ import { AudioProvider } from "@/lib/audio-context";
 import { profile } from "@/content/stages";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://sravanravula.dev"),
+  metadataBase: new URL("https://im-sravan-ravula.dev"),
   title: `${profile.name} — ${profile.title}`,
   description: profile.summary,
   openGraph: {

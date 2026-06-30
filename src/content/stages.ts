@@ -93,7 +93,7 @@ export const stages: Stage[] = [
     ],
     fun: {
       ...fun(
-        "I studied electrical engineering — until I realized you can't Ctrl-Z a soldering iron. So I switched to software."
+        "I studied in electrical engineering — until I realized you can't Ctrl-Z a soldering iron. So I switched to software."
       ),
       audioUrl: "/audio/education.m4a",
     },
@@ -221,7 +221,7 @@ export const stages: Stage[] = [
     ],
     fun: {
       ...fun(
-        "First indie app — a social app for devs. Backend, web, iPhone app, everything, all me. Fueled entirely by coffee and beer."
+        "First indie app — a social app for devs. Backend, web, iPhone app, everything, all Solo. Fueled entirely by coffee and beer."
       ),
       audioUrl: "/audio/byteai.m4a",
     },
@@ -280,7 +280,7 @@ export const stages: Stage[] = [
     links: [{ label: "truespend.org", url: "https://www.truespend.org" }],
     fun: {
       ...fun(
-        "TrueSpend — I co-founded this. You walk into a store and your phone snitches on your wallet. And also, iOS sometimes kills the battery, as you know. So, that's my app."
+        "TrueSpend — I co-founded this. You walk into a store and your phone snitches on your wallet. And also, iOS sometimes kills the battery, as you know. So, does my app."
       ),
       audioUrl: "/audio/truespend.m4a",
     },
