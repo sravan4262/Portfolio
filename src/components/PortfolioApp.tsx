@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Download, Mail } from "lucide-react";
 import { useMode } from "@/lib/mode-context";
@@ -17,6 +18,16 @@ export default function PortfolioApp() {
   const renderMode = mode ?? "boring";
   const boringCopy = renderMode === "boring";
   const showSplash = hydrated && mode === null;
+
+  // While the splash overlay is up, lock body scroll — the pipeline behind it
+  // is tall and would otherwise leave a scrollbar with nowhere to go.
+  useEffect(() => {
+    if (!showSplash) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showSplash]);
 
   return (
     <main className="min-h-screen bg-ink text-text">
