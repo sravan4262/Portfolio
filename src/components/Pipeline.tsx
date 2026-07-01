@@ -1,16 +1,17 @@
 "use client";
 
-import { stages } from "@/content/stages";
+import { preStages, parallelStages, postStages, stages, type Stage } from "@/content/stages";
+import { Play, Pause, Square, RotateCcw, ChevronLeft } from "lucide-react";
 import type { Mode } from "@/lib/mode-context";
 import { usePipelineRun } from "@/lib/usePipelineRun";
-import JobList from "./JobList";
-import LogPanel from "./LogPanel";
-import AudioPlayer from "./AudioPlayer";
+import ProgressSpine from "./ProgressSpine";
+import StageCard from "./StageCard";
+import VoiceAvatar from "./VoiceAvatar";
 
 /**
- * Two columns: the vertical stage list (all visible, left) and the streamed
- * terminal-card logs (right). Rendered per-mode and keyed by mode in the parent,
- * so Fun and Recruiter keep independent run state. Nothing runs until asked.
+ * The career, as a build you can run. A progress spine up top, then real stage
+ * cards (no fake terminal). Rendered per-mode and keyed by mode in the parent,
+ * so Fun and Recruiter keep independent run state.
  */
 export default function Pipeline({ mode }: { mode: Mode }) {
   const showAudio = mode === "fun";
@@ -32,53 +33,91 @@ export default function Pipeline({ mode }: { mode: Mode }) {
 
   const everRun = lines.length > 0;
 
-  const btn =
-    "inline-flex items-center gap-2 rounded-md border border-success/60 bg-success/15 px-4 py-2 text-sm font-semibold text-text transition hover:bg-success/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-success";
-  const subtle = "rounded-md border border-line px-3 py-2 text-sm text-muted transition hover:bg-panel";
+  const runState = runningAll
+    ? paused
+      ? "Paused"
+      : "Running…"
+    : everRun
+      ? "Done"
+      : "Ready when you are";
+
+  const primaryBtn =
+    "inline-flex items-center gap-2 rounded-lg brand-gradient px-4 py-2 text-sm font-semibold text-white shadow-[0_6px_20px_-8px_rgba(37,99,235,0.7)] transition hover:shadow-[0_8px_28px_-6px_rgba(56,189,248,0.8)]";
+  const subtleBtn =
+    "inline-flex items-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-2 text-sm text-muted transition hover:border-brand-2/50 hover:text-text";
+
+  const renderCard = (stage: Stage) => (
+    <StageCard
+      key={stage.id}
+      stage={stage}
+      mode={mode}
+      runtime={statuses[stage.id]}
+      logLines={lines.filter((l) => l.jobId === stage.id)}
+      collapsed={mode === "fun" && statuses[stage.id] === "queued" && viewJob !== stage.id}
+      runDisabled={runningAll}
+      onRun={() => runJob(stage)}
+      audioSlot={
+        showAudio ? (
+          <VoiceAvatar id={stage.id} audioSrc={stage.fun.audioUrl} label="Hear me tell it" />
+        ) : undefined
+      }
+    />
+  );
+
+  const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+    <div className="space-y-3">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{title}</p>
+      {children}
+    </div>
+  );
+
+  const focused = viewJob ? stages.find((s) => s.id === viewJob) : null;
 
   return (
-    <div className="space-y-5">
-      {/* workflow toolbar */}
-      <div className="flex flex-wrap items-center gap-3 rounded-xl border border-line bg-panel/50 px-4 py-3">
-        <span className="font-mono text-xs text-muted">
-          <span className={running ? (paused ? "text-muted" : "text-running") : "text-success"}>●</span>{" "}
-          workflow: deploy-career
-          {runningAll ? (paused ? " — paused" : " — running") : everRun ? " — done" : " — idle"}
+    <div className="space-y-6">
+      {/* run toolbar */}
+      <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-line bg-panel/50 px-4 py-3">
+        <span className="flex items-center gap-2 text-sm">
+          <span
+            className={[
+              "h-2 w-2 rounded-full",
+              running && !paused ? "bg-brand-2 live-pulse" : everRun ? "bg-live" : "bg-muted/50",
+            ].join(" ")}
+          />
+          <span className="text-muted">Pipeline:</span>
+          <span className="font-medium text-text">{runState}</span>
         </span>
 
         <div className="ml-auto flex items-center gap-2">
           {viewJob && (
-            <button
-              onClick={() => setViewJob(null)}
-              className="rounded-md border border-line px-2.5 py-1 font-mono text-[11px] text-muted transition hover:bg-panel"
-            >
-              ← all jobs
+            <button onClick={() => setViewJob(null)} className={subtleBtn}>
+              <ChevronLeft className="h-3.5 w-3.5" /> All stages
             </button>
           )}
 
           {runningAll ? (
             <>
               {paused ? (
-                <button onClick={resume} className={btn}>
-                  <span aria-hidden>▶</span> Resume
+                <button onClick={resume} className={primaryBtn}>
+                  <Play className="h-4 w-4 fill-current" /> Resume
                 </button>
               ) : (
-                <button onClick={pause} className={btn}>
-                  <span aria-hidden>⏸</span> Pause
+                <button onClick={pause} className={primaryBtn}>
+                  <Pause className="h-4 w-4 fill-current" /> Pause
                 </button>
               )}
-              <button onClick={stop} className={subtle}>
-                <span aria-hidden>■</span> Stop
+              <button onClick={stop} className={subtleBtn}>
+                <Square className="h-3.5 w-3.5" /> Stop
               </button>
             </>
           ) : (
             <>
-              <button onClick={runAll} className={btn}>
-                <span aria-hidden>▶</span> {everRun ? "Re-run pipeline" : "Run pipeline"}
+              <button onClick={runAll} className={primaryBtn}>
+                <Play className="h-4 w-4 fill-current" /> {everRun ? "Run it again" : "Run the whole thing"}
               </button>
               {everRun && (
-                <button onClick={reset} className={subtle}>
-                  ↺ Reset
+                <button onClick={reset} className={subtleBtn}>
+                  <RotateCcw className="h-3.5 w-3.5" /> Reset
                 </button>
               )}
             </>
@@ -86,37 +125,26 @@ export default function Pipeline({ mode }: { mode: Mode }) {
         </div>
       </div>
 
-      {/* stages (left) + logs (right) */}
-      <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-[290px_minmax(0,1fr)]">
-        <div className="lg:sticky lg:top-20">
-          <JobList
-            statuses={statuses}
-            viewJob={viewJob}
-            onView={(s) => setViewJob(s.id)}
-            onRun={(s) => runJob(s)}
-            runDisabled={runningAll}
-          />
-        </div>
+      <ProgressSpine statuses={statuses} activeId={viewJob} onSelect={setViewJob} />
 
-        <LogPanel
-          lines={lines}
-          viewJob={viewJob}
-          running={running}
-          emptyHint={
-            viewJob
-              ? "This job hasn't run yet — press ▶ on it (or Run pipeline) to stream its logs."
-              : "Press ▶ Run pipeline, or click ▶ on any single job, to stream its logs here."
-          }
-          headerSlotFor={
-            showAudio
-              ? (s) =>
-                  s.id === viewJob ? (
-                    <AudioPlayer id={s.id} src={s.fun.audioUrl} label="▶ audio" />
-                  ) : null
-              : undefined
-          }
-        />
-      </div>
+      {/* stage cards */}
+      {focused ? (
+        <div className="space-y-3">{renderCard(focused)}</div>
+      ) : (
+        <div className="space-y-8">
+          <Section title="Main track">
+            <div className="space-y-3">{preStages.map(renderCard)}</div>
+          </Section>
+
+          <Section title="Personal projects — built on the side">
+            <div className="grid gap-3 lg:grid-cols-2">{parallelStages.map(renderCard)}</div>
+          </Section>
+
+          <Section title="Wrap-up">
+            <div className="space-y-3">{postStages.map(renderCard)}</div>
+          </Section>
+        </div>
+      )}
     </div>
   );
 }

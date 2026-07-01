@@ -1,71 +1,124 @@
 @import "tailwindcss";
 
-/* ── Pipeline theme — dark, résumé blue ──────────────────────────────────── */
+/* ── Light theme — white canvas, exact résumé blue (#5187ef) ──────────────── */
 @theme {
-  --color-ink: #0a1020;
-  --color-ink-soft: #0e1728;
-  --color-panel: #131f36;
-  --color-line: #223252;
-  --color-muted: #8ba1c4;
-  --color-text: #dce7f6;
+  /* surfaces */
+  --color-ink: #ffffff; /* page canvas */
+  --color-ink-soft: #f4f7fe; /* subtle sections / console bg */
+  --color-panel: #ffffff; /* cards */
+  --color-panel-2: #eef3fd; /* hover / nested / chips */
+  --color-line: #e3e9f4; /* hairline borders */
+  --color-muted: #5a6b88; /* secondary text */
+  --color-text: #0f1b33; /* primary text */
 
-  --color-pipe: #2c4068;
-  --color-success: #3ddc84;
-  --color-live: #34d399;
-  --color-running: #facc15;
-  --color-accent: #3b82f6; /* résumé blue */
-  --color-accent-2: #6aa8ff; /* lighter blue */
+  /* brand — exact résumé blue + readable shades */
+  --color-brand: #5187ef; /* exact résumé blue */
+  --color-brand-2: #2f66e0; /* deeper — for text / hover on white */
+  --color-brand-3: #7ba6f5; /* lighter tint */
+  --color-accent: #5187ef; /* back-compat alias */
+  --color-accent-2: #2f66e0; /* back-compat alias */
 
-  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  /* status (no greens) */
+  --color-live: #0ea5e9; /* live = sky */
+  --color-shipped: #5a6b88; /* shipped = neutral */
+  --color-running: #d97706; /* in dev = amber */
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, "SF Mono", Menlo, Consolas,
+    monospace;
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html,
 body {
   background: var(--color-ink);
   color: var(--color-text);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Grid backdrop */
-.pipeline-grid {
-  background-image:
-    linear-gradient(rgba(59, 130, 246, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
-  background-size: 40px 40px;
+/* ── Signature gradient helpers (résumé blue) ─────────────────────────────── */
+.brand-gradient {
+  background-image: linear-gradient(135deg, #5187ef 0%, #2f66e0 100%);
+}
+.brand-text {
+  background-image: linear-gradient(135deg, #2f66e0 0%, #5187ef 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+/* very soft blue wash behind hero elements (subtle on white) */
+.brand-glow {
+  background: radial-gradient(
+    closest-side,
+    rgba(81, 135, 239, 0.22),
+    rgba(81, 135, 239, 0.08) 60%,
+    transparent 100%
+  );
+  filter: blur(30px);
 }
 
-/* Animated "flow" dash along a pipe edge */
-@keyframes dashflow {
+/* faint blueprint dot grid */
+.dot-grid {
+  background-image: radial-gradient(rgba(81, 135, 239, 0.1) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* soft card shadow tuned for white */
+.card-shadow {
+  box-shadow: 0 1px 2px rgba(15, 27, 51, 0.04), 0 6px 20px -12px rgba(15, 27, 51, 0.12);
+}
+
+/* ── Pipeline spine: gradient travels as the run progresses ───────────────── */
+@keyframes spineflow {
   to {
-    stroke-dashoffset: -24;
+    background-position: 200% 0;
   }
 }
-.pipe-flow {
-  stroke-dasharray: 6 6;
-  animation: dashflow 0.9s linear infinite;
+.spine-active {
+  background-image: linear-gradient(90deg, #2f66e0, #7ba6f5, #2f66e0);
+  background-size: 200% 100%;
+  animation: spineflow 2.2s linear infinite;
 }
 
-/* Pulsing live dot */
-@keyframes livepulse {
+/* single running indicator — gentle, used on ONE element at a time */
+@keyframes livebreath {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.55);
+    box-shadow: 0 0 0 0 rgba(81, 135, 239, 0.5);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(52, 211, 153, 0);
+    box-shadow: 0 0 0 6px rgba(81, 135, 239, 0);
   }
 }
-.live-dot {
-  animation: livepulse 1.8s ease-out infinite;
+.live-pulse {
+  animation: livebreath 1.8s ease-out infinite;
+}
+
+/* terminal cursor blink (one cursor, on the active running line only) */
+@keyframes blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-blink {
+  animation: blink 1s step-end infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pipe-flow,
-  .live-dot {
+  .spine-active,
+  .live-pulse,
+  .cursor-blink {
     animation: none !important;
   }
 }

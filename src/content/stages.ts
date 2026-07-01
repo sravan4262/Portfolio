@@ -21,6 +21,7 @@ export type Stage = {
   summary: string; // concise, scannable (boring logs)
   about: string; // fuller text (kept for SEO / reference)
   tech?: Tech[]; // stack + why
+  highlights?: string[]; // recruiter-scannable wins — impact first, quantified
   skillGroups?: SkillGroup[]; // only for the skills stage
   links?: { label: string; url: string }[];
   fun: {
@@ -47,6 +48,26 @@ export const profile = {
   summary:
     "Senior software engineer with 9 years across full-stack .NET development and multi-cloud platform engineering (Azure, AWS, GCP). At Citrix, I build FedRAMP High–compliant cloud infrastructure, cut costs through automation, and apply LLMs to security and operations workflows. I ship production systems end to end and have solo-built two live apps, including Byte AI (50+ daily users), and co-founded TrueSpend.",
   resumeUrl: "/resume.pdf",
+
+  // recruiter snapshot
+  openTo:
+    "Senior Cloud · Full-Stack · Generative-AI · Platform/DevOps roles — remote, or on-site in Fort Lauderdale, FL.",
+  coreStack: [
+    "C# / .NET 8–9",
+    "Azure · AWS · GCP",
+    "Kubernetes · Terraform",
+    "React · Next.js · Angular",
+    "Azure OpenAI · pgvector",
+    "SQL Server · PostgreSQL",
+  ],
+  metrics: [
+    { value: "9 yrs", label: "shipping production software" },
+    { value: "FedRAMP High", label: "cloud infra at Citrix today" },
+    { value: "3 clouds", label: "Azure · AWS · GCP, in prod" },
+    { value: "2 live apps", label: "solo-built · +1 co-founded" },
+    { value: "~$25K/yr", label: "infra cost cut (VMs → K8s)" },
+    { value: "2×+ faster", label: "search rebuilt on Azure AI" },
+  ],
 };
 
 const fun = (s: string) => ({ script: s, transcript: s });
@@ -61,7 +82,8 @@ export const stages: Stage[] = [
     sublabel: "checkout & setup",
     stageTag: "checkout",
     status: "success",
-    summary: "Runner boots, source checked out: 9 yrs experience, based in Fort Lauderdale, FL.",
+    summary:
+      "Senior full-stack + cloud engineer, 9 years in, based in Fort Lauderdale, FL. Two live apps of my own, one co-founded. Here's the whole run.",
     about:
       "Pipeline initialization — spinning up the runner and checking out the candidate before the build stages run.",
     fun: {
@@ -84,7 +106,13 @@ export const stages: Stage[] = [
     dates: "2011 – 2016",
     location: "UMKC · KL University",
     status: "success",
-    summary: "EE major who switched into software — systems and math foundation.",
+    summary:
+      "Started in electrical engineering, ended up in software — the systems-and-math foundation stuck around.",
+    highlights: [
+      "M.S. Electrical Engineering — University of Missouri–Kansas City",
+      "B.S. Electronics — KL University",
+      "Hardware-to-software jump that still shapes how I debug systems",
+    ],
     about:
       "Started in electrical/electronics engineering, then moved into software — a systems and math foundation that carried into cloud and backend work. M.S. EE, University of Missouri–Kansas City (2015–16); B.S. Electronics, KL University (2011–15).",
     tech: [
@@ -111,7 +139,13 @@ export const stages: Stage[] = [
     dates: "Jan 2017 – Dec 2017",
     location: "Washington, DC",
     status: "success",
-    summary: "First prod deploy: government healthcare claims; tuned SQL by 75%.",
+    summary:
+      "Cut my teeth on federal healthcare claims — distributed services, internal desktop tooling, and a database I made a lot faster.",
+    highlights: [
+      "Tuned SQL Server stored procedures — 75% faster",
+      "Shipped distributed WCF/SOAP services for HMS medical-claims review",
+      "Let analysts edit claim rules live via InRule — zero redeploys",
+    ],
     about:
       "Built distributed services and internal desktop tools for government healthcare claims processing (HMS medical-claims review); optimized SQL Server stored procedures by 75%.",
     tech: [
@@ -141,7 +175,14 @@ export const stages: Stage[] = [
     dates: "Jan 2018 – Sep 2025",
     location: "Pittsburgh, PA",
     status: "success",
-    summary: "7 yrs of .NET APIs + UIs; led a search rebuild that doubled speed.",
+    summary:
+      "Seven years as the go-to engineer on a healthcare member platform — APIs, front-ends, and the search rebuild everyone felt.",
+    highlights: [
+      "Led on-prem → Azure AI Search migration — 2×+ faster",
+      "Shipped Azure OpenAI natural-language search across 40+ filters",
+      "Cut CI/CD deploy time 40% on Azure DevOps",
+      "7 yrs scaling .NET 8 APIs + Angular/React UIs for members",
+    ],
     about:
       "Seven years building scalable .NET APIs and front-ends for a healthcare member platform. Led an on-prem → Azure AI Search migration (>100% faster) and integrated Azure OpenAI for natural-language queries.",
     tech: [
@@ -174,7 +215,14 @@ export const stages: Stage[] = [
     dates: "Oct 2025 – Present",
     location: "Fort Lauderdale, FL",
     status: "live",
-    summary: "Multi-cloud + FedRAMP High; cut ~$25K/yr; AI for security & ops.",
+    summary:
+      "Where I am now — building multi-cloud, FedRAMP High infrastructure, and teaching LLMs to do the security busywork.",
+    highlights: [
+      "Cut ~$25K/yr by moving workloads from VMs → Kubernetes",
+      "Automated policy & operations — 90%+ less manual toil",
+      "Built AI security-triage that auto-files Jira tickets",
+      "Multi-cloud (Azure/AWS/GCP) infra to FedRAMP High standards",
+    ],
     about:
       "Multi-cloud (Azure / AWS / GCP) infrastructure for FedRAMP High systems. Drove cost optimization (VMs → Kubernetes, ~$25K/yr), automated policy + operations (>90% less manual work), and built AI tooling for security triage and incident summarization.",
     tech: [
@@ -204,7 +252,13 @@ export const stages: Stage[] = [
     years: "live · ~50 DAU",
     location: "iOS + Web",
     status: "live",
-    summary: "Solo-built dev social app (iOS + web), ~50 daily users, semantic search.",
+    summary:
+      "My indie app — a social platform for developers, built end to end by one person (me) and live with real daily users.",
+    highlights: [
+      "Solo-built the whole stack: .NET backend, Next.js web, native SwiftUI iOS",
+      "~50 daily active users, live on the App Store",
+      "Hybrid semantic search: pgvector + self-hosted ONNX embeddings, fused with RRF",
+    ],
     about:
       "A tech-focused social platform built end to end — backend, web, and native iOS — with hybrid semantic search and AI content features. ~50 daily active users.",
     tech: [
@@ -238,7 +292,13 @@ export const stages: Stage[] = [
     years: "live",
     location: "Web",
     status: "live",
-    summary: "FIRE planner with month-by-month simulation + AI data entry.",
+    summary:
+      "A financial-independence planner that answers one scary question: when can you actually stop working?",
+    highlights: [
+      "Month-by-month Monte-Carlo simulation with tax-optimized withdrawals",
+      "AI assistant turns plain-English input into structured financial data",
+      "Live in production (Next.js + Hono + Supabase)",
+    ],
     about:
       "A financial-independence / retirement (FIRE) planning platform with a month-by-month portfolio simulation engine (Monte Carlo, tax-optimized withdrawals) and an AI assistant for data entry.",
     tech: [
@@ -267,7 +327,13 @@ export const stages: Stage[] = [
     years: "in dev · TestFlight",
     location: "iOS + Android",
     status: "in-progress",
-    summary: "Co-founded geo card-rewards app; picks your best card on arrival.",
+    summary:
+      "Co-founded startup — a geo-aware app that tells you which card to swipe the moment you walk into a store.",
+    highlights: [
+      "Co-founder — product + engineering, iOS & Android on one Expo codebase",
+      "Real money movement via Plaid + Stripe",
+      "Battery-efficient geofencing; nightly Azure OpenAI insights — in TestFlight beta",
+    ],
     about:
       "A geo-aware app that recommends the best rewards credit card the moment you arrive at a store. Co-founded; in development on iOS TestFlight.",
     tech: [
@@ -405,10 +471,11 @@ export const stages: Stage[] = [
     type: "cleanup",
     segment: "post",
     label: "cleanup",
-    sublabel: "post & teardown",
-    stageTag: "post",
+    sublabel: "let's talk",
+    stageTag: "the wrap",
     status: "success",
-    summary: "Run complete — all jobs passed. Open to Senior Cloud / Full-Stack / GenAI roles.",
+    summary:
+      "That's the whole run — nothing broke, nobody got paged. I'm open to senior cloud, full-stack, and GenAI roles.",
     about:
       "Pipeline complete. Artifacts cached, status green. Open to senior cloud, full-stack, and generative-AI roles — let's talk.",
     links: [

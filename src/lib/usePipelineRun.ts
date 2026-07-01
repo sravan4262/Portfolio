@@ -11,13 +11,11 @@ export type RenderedLine = LogLine & { jobId: string; key: number };
 const idleStatuses = (): Record<string, JobStatus> =>
   Object.fromEntries(stages.map((s) => [s.id, "queued"]));
 
-// Per-line cadence (ms) — deliberately slow so each line is readable.
-// Long lines linger longer; the closing line gets a beat before the next stage.
+// Per-step cadence (ms) — GitHub-Actions feel: a step (a couple words) lands,
+// a short beat, then the next. The completion line gets a slightly longer hold.
 const delayFor = (line: LogLine) => {
-  if (line.kind === "success" || line.kind === "pending") return 1300;
-  if (line.text.length > 120) return 1500;
-  if (line.text.length > 70) return 1200;
-  return 950;
+  if (line.kind === "success" || line.kind === "pending") return 550;
+  return 300;
 };
 
 const wait = (ms: number) => new Promise<void>((res) => setTimeout(res, ms));

@@ -6,7 +6,7 @@ type AudioState = {
   /** id of the clip currently playing, or null */
   playingId: string | null;
   /** register a play; stops whatever else was playing */
-  play: (id: string, el: HTMLAudioElement) => void;
+  play: (id: string, el: HTMLMediaElement) => void;
   /** clear the active clip (on pause/end) */
   stop: (id: string) => void;
 };
@@ -15,9 +15,9 @@ const AudioCtx = createContext<AudioState | undefined>(undefined);
 
 export function AudioProvider({ children }: { children: ReactNode }) {
   const [playingId, setPlayingId] = useState<string | null>(null);
-  const currentEl = useRef<HTMLAudioElement | null>(null);
+  const currentEl = useRef<HTMLMediaElement | null>(null);
 
-  const play = (id: string, el: HTMLAudioElement) => {
+  const play = (id: string, el: HTMLMediaElement) => {
     if (currentEl.current && currentEl.current !== el) {
       currentEl.current.pause();
     }
