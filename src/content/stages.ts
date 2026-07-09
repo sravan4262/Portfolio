@@ -46,18 +46,18 @@ export const profile = {
     github: "https://github.com/sravan4262",
   },
   summary:
-    "Senior software engineer with 9+ years across full-stack .NET development and multi-cloud platform engineering (Azure, AWS, GCP). Builds FedRAMP High–compliant cloud infrastructure, drives cost optimization through C#/PowerShell automation, and integrates Generative AI (LLMs, embeddings, vector search) into enterprise security and operations workflows. Solo-built two live apps — including Byte AI (~50 daily active users) — and co-founded TrueSpend, delivering products end to end from TypeScript/React web to .NET APIs to native iOS.",
+    "Senior Software Engineer with 9+ years of experience designing and delivering scalable cloud-native applications, distributed systems, and AI-powered solutions. Expertise in C#, .NET, Terraform, React, and Generative AI, building secure enterprise platforms and modern full-stack applications across Azure, AWS, and GCP. Independently built and launched two production applications — including Byte AI (iOS & Web) and Infinity Finances — and co-founded TrueSpend, delivering products end to end from architecture and cloud infrastructure to AI integration, web, mobile, and production deployment.",
   resumeUrl: "/resume.pdf",
 
   // recruiter snapshot
   openTo:
     "Senior Cloud · Full-Stack · Generative-AI · Platform/DevOps roles — remote, or on-site in Fort Lauderdale, FL.",
   coreStack: [
-    "C# / .NET 8–9",
-    "Azure · AWS · GCP",
-    "Kubernetes · Terraform",
-    "React · Next.js · Angular",
-    "Azure OpenAI · pgvector",
+    "C# / .NET",
+    "Microservices",
+    "React · Next.js",
+    "Azure · Terraform",
+    "GenAI · LLMs",
     "SQL Server · PostgreSQL",
   ],
   metrics: [
@@ -178,8 +178,10 @@ export const stages: Stage[] = [
     summary:
       "Seven years as the go-to engineer on a healthcare member platform — APIs, front-ends, and the search rebuild everyone felt.",
     highlights: [
+      "Led platform initiatives end to end through the full SDLC",
       "Led on-prem → Azure AI Search migration — sub-second, >98% faster (load-tested)",
       "Owned 10 microservices, 25 worker services & 8 DBs end to end",
+      "Mentored engineers; set coding, code-review & CI/CD standards",
       "Shipped Azure OpenAI natural-language search across 40+ filters",
       "Cut CI/CD deploy time from ~8–10 min to under 2 min (Azure DevOps)",
     ],
@@ -218,6 +220,7 @@ export const stages: Stage[] = [
     summary:
       "Where I am now — building multi-cloud, FedRAMP High infrastructure, and teaching LLMs to do the security busywork.",
     highlights: [
+      "Lead architecture/design reviews & cross-team technical decisions",
       "Cut ~$20K/yr moving 4 Windows VMs → lightweight Linux K8s pods",
       "Daily pipeline recovers ~$24K/yr in orphaned Azure image storage",
       "Policy deploys: multi-hour weekly manual → one-click Jenkins pipeline",
