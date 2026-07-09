@@ -9,6 +9,18 @@ import StageCard from "./StageCard";
 import VoiceAvatar from "./VoiceAvatar";
 
 /**
+ * A titled group of stage cards. Defined at module scope (NOT inside Pipeline) so
+ * its component identity is stable across renders — otherwise every pipeline
+ * re-render would remount its children, tearing down any playing stage video.
+ */
+const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div className="space-y-3">
+    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{title}</p>
+    {children}
+  </div>
+);
+
+/**
  * The career, as a build you can run. A progress spine up top, then real stage
  * cards (no fake terminal). Rendered per-mode and keyed by mode in the parent,
  * so Fun and Recruiter keep independent run state.
@@ -62,13 +74,6 @@ export default function Pipeline({ mode }: { mode: Mode }) {
         ) : undefined
       }
     />
-  );
-
-  const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
-    <div className="space-y-3">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted">{title}</p>
-      {children}
-    </div>
   );
 
   const focused = viewJob ? stages.find((s) => s.id === viewJob) : null;

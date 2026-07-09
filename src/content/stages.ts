@@ -35,7 +35,7 @@ export const profile = {
   name: "Sravan Ravula",
   title: "Senior Cloud Engineer · Full-Stack Developer · Generative AI & DevOps",
   location: "Fort Lauderdale, FL",
-  experience: "9 yrs",
+  experience: "9+ yrs",
   phone: "908-420-0323",
   email: "kumar.ravulaa@gmail.com",
   headshot: "/headshot.jpg",
@@ -46,7 +46,7 @@ export const profile = {
     github: "https://github.com/sravan4262",
   },
   summary:
-    "Senior software engineer with 9 years across full-stack .NET development and multi-cloud platform engineering (Azure, AWS, GCP). At Citrix, I build FedRAMP High–compliant cloud infrastructure, cut costs through automation, and apply LLMs to security and operations workflows. I ship production systems end to end and have solo-built two live apps, including Byte AI (50+ daily users), and co-founded TrueSpend.",
+    "Senior software engineer with 9+ years across full-stack .NET development and multi-cloud platform engineering (Azure, AWS, GCP). Builds FedRAMP High–compliant cloud infrastructure, drives cost optimization through C#/PowerShell automation, and integrates Generative AI (LLMs, embeddings, vector search) into enterprise security and operations workflows. Solo-built two live apps — including Byte AI (~50 daily active users) — and co-founded TrueSpend, delivering products end to end from TypeScript/React web to .NET APIs to native iOS.",
   resumeUrl: "/resume.pdf",
 
   // recruiter snapshot
@@ -61,12 +61,12 @@ export const profile = {
     "SQL Server · PostgreSQL",
   ],
   metrics: [
-    { value: "9 yrs", label: "shipping production software" },
+    { value: "9+ yrs", label: "shipping production software" },
     { value: "FedRAMP High", label: "cloud infra at Citrix today" },
     { value: "3 clouds", label: "Azure · AWS · GCP, in prod" },
     { value: "2 live apps", label: "solo-built · +1 co-founded" },
-    { value: "~$25K/yr", label: "infra cost cut (VMs → K8s)" },
-    { value: "2×+ faster", label: "search rebuilt on Azure AI" },
+    { value: "~$44K/yr", label: "cloud cost cut at Citrix" },
+    { value: ">98% faster", label: "search rebuilt on Azure AI" },
   ],
 };
 
@@ -178,22 +178,22 @@ export const stages: Stage[] = [
     summary:
       "Seven years as the go-to engineer on a healthcare member platform — APIs, front-ends, and the search rebuild everyone felt.",
     highlights: [
-      "Led on-prem → Azure AI Search migration — 2×+ faster",
+      "Led on-prem → Azure AI Search migration — sub-second, >98% faster (load-tested)",
+      "Owned 10 microservices, 25 worker services & 8 DBs end to end",
       "Shipped Azure OpenAI natural-language search across 40+ filters",
-      "Cut CI/CD deploy time 40% on Azure DevOps",
-      "7 yrs scaling .NET 8 APIs + Angular/React UIs for members",
+      "Cut CI/CD deploy time from ~8–10 min to under 2 min (Azure DevOps)",
     ],
     about:
-      "Seven years building scalable .NET APIs and front-ends for a healthcare member platform. Led an on-prem → Azure AI Search migration (>100% faster) and integrated Azure OpenAI for natural-language queries.",
+      "Seven years building scalable .NET APIs and front-ends for a healthcare member platform — owning 10 microservices, 25 worker services, and 8 databases end to end. Led an on-prem → Azure AI Search migration (sub-second results, >98% faster, load-tested) and integrated Azure OpenAI for natural-language queries.",
     tech: [
       { name: ".NET 8 / ASP.NET Core", why: "High-performance APIs" },
-      { name: "Azure AI Search", why: "Replaced slow on-prem search; >100% faster" },
+      { name: "Azure AI Search", why: "Replaced slow on-prem search; sub-second, >98% faster" },
       { name: "Azure OpenAI", why: "Plain-English queries over 40 filters" },
       { name: "Angular / React / Redux", why: "Rich member UIs, predictable state" },
       { name: "Redis", why: "Cache hot data" },
       { name: "NServiceBus / RabbitMQ", why: "Reliable async messaging" },
       { name: "SQL Server / Cosmos DB", why: "Relational + distributed data" },
-      { name: "Azure DevOps CI/CD", why: "Cut deploy time 40%" },
+      { name: "Azure DevOps CI/CD", why: "Deploys ~8–10 min → under 2 min" },
     ],
     fun: {
       ...fun(
@@ -218,18 +218,20 @@ export const stages: Stage[] = [
     summary:
       "Where I am now — building multi-cloud, FedRAMP High infrastructure, and teaching LLMs to do the security busywork.",
     highlights: [
-      "Cut ~$25K/yr by moving workloads from VMs → Kubernetes",
-      "Automated policy & operations — 90%+ less manual toil",
+      "Cut ~$20K/yr moving 4 Windows VMs → lightweight Linux K8s pods",
+      "Daily pipeline recovers ~$24K/yr in orphaned Azure image storage",
+      "Policy deploys: multi-hour weekly manual → one-click Jenkins pipeline",
       "Built AI security-triage that auto-files Jira tickets",
       "Multi-cloud (Azure/AWS/GCP) infra to FedRAMP High standards",
     ],
     about:
-      "Multi-cloud (Azure / AWS / GCP) infrastructure for FedRAMP High systems. Drove cost optimization (VMs → Kubernetes, ~$25K/yr), automated policy + operations (>90% less manual work), and built AI tooling for security triage and incident summarization.",
+      "Multi-cloud (Azure / AWS / GCP) infrastructure for FedRAMP High systems. Drove cost optimization — migrated 4 Windows VMs to lightweight Linux Kubernetes pods (~$20K/yr) and built a daily pipeline that recovers ~$24K/yr in orphaned image storage. Automated Azure Policy enforcement via a Jenkins pipeline (multi-hour weekly process → one click) and built AI tooling for security triage and incident summarization.",
     tech: [
       { name: "Azure / AWS / GCP", why: "Multi-cloud platform engineering" },
       { name: "Kubernetes", why: "Cost + scaling over VMs" },
       { name: "Terraform", why: "Auditable infra for FedRAMP" },
       { name: "C# / PowerShell", why: "Azure automation" },
+      { name: "Jenkins", why: "One-click policy deploys" },
       { name: "Azure OpenAI", why: "Vuln triage → auto-Jira; ops summaries" },
       { name: "Splunk Cloud (HEC)", why: "Push-based telemetry" },
     ],
@@ -258,6 +260,7 @@ export const stages: Stage[] = [
       "Solo-built the whole stack: .NET backend, Next.js web, native SwiftUI iOS",
       "~50 daily active users, live on the App Store",
       "Hybrid semantic search: pgvector + self-hosted ONNX embeddings, fused with RRF",
+      "Personalized 'For You' feed — ranks by cosine similarity to per-user interest embeddings",
     ],
     about:
       "A tech-focused social platform built end to end — backend, web, and native iOS — with hybrid semantic search and AI content features. ~50 daily active users.",
@@ -406,6 +409,7 @@ export const stages: Stage[] = [
           "OpenShift",
           "Terraform",
           "GitHub Actions",
+          "Jenkins",
           "Azure DevOps CI/CD",
           "PowerShell",
           "FedRAMP High",
@@ -453,6 +457,7 @@ export const stages: Stage[] = [
           "Microservices",
           "xUnit / Vitest / Playwright",
           "TDD",
+          "SDLC",
           "Agile / Scrum / SAFe",
         ],
       },
