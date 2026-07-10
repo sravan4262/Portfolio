@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-import { motion } from "framer-motion";
-import { Download, Mail } from "lucide-react";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Download, Mail, Network } from "lucide-react";
 import { useMode } from "@/lib/mode-context";
 import { profile } from "@/content/stages";
 import Splash from "./Splash";
@@ -10,9 +10,11 @@ import Pipeline from "./Pipeline";
 import ModeToggle from "./ModeToggle";
 import RecruiterSnapshot from "./RecruiterSnapshot";
 import ResumeSeo from "./ResumeSeo";
+import RequestJourneyConstellation from "./RequestJourneyConstellation";
 
 export default function PortfolioApp() {
   const { mode, goHome, hydrated } = useMode();
+  const [journeyOpen, setJourneyOpen] = useState(false);
 
   // Dark everywhere; mode only changes content (audio + copy), never the theme.
   const renderMode = mode ?? "boring";
@@ -36,7 +38,7 @@ export default function PortfolioApp() {
 
       {showSplash && (
         <div className="fixed inset-0 z-50 bg-ink">
-          <Splash />
+          <Splash onOpenJourney={() => setJourneyOpen(true)} />
         </div>
       )}
 
@@ -59,6 +61,14 @@ export default function PortfolioApp() {
             </span>
           </button>
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setJourneyOpen(true)}
+              title="How the internet works — an animated deep dive"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-brand/40 bg-brand/5 px-3 py-1.5 text-sm font-semibold text-brand-2 transition hover:border-brand-2/60 hover:bg-brand/10"
+            >
+              <Network className="h-3.5 w-3.5" aria-hidden />
+              <span className="hidden sm:inline">How the web works</span>
+            </button>
             <a
               href={profile.resumeUrl}
               className="inline-flex items-center gap-1.5 rounded-lg border border-line bg-panel px-3 py-1.5 text-sm font-semibold text-text transition hover:border-brand-2/50 hover:bg-panel-2"
@@ -139,6 +149,11 @@ export default function PortfolioApp() {
           </div>
         </footer>
       </div>
+
+      {/* animated deep-dive: how an internet request travels */}
+      <AnimatePresence>
+        {journeyOpen && <RequestJourneyConstellation onClose={() => setJourneyOpen(false)} />}
+      </AnimatePresence>
     </main>
   );
 }

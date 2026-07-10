@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, ArrowRight, Download, MapPin } from "lucide-react";
+import { Play, ArrowRight, Download, MapPin, Network } from "lucide-react";
 import { useMode } from "@/lib/mode-context";
 import { profile } from "@/content/stages";
 
@@ -15,7 +15,7 @@ const PROMPTS = [
   "Fine, fine — go ahead. 🫡",
 ];
 
-export default function Splash() {
+export default function Splash({ onOpenJourney }: { onOpenJourney?: () => void }) {
   const { setMode } = useMode();
   const [imgOk, setImgOk] = useState(true);
 
@@ -140,6 +140,27 @@ export default function Splash() {
               </button>
             </div>
           </div>
+
+          {/* playful third door: the "how the web works" deep dive */}
+          <button
+            onClick={onOpenJourney}
+            className="group mt-4 flex w-full items-center justify-between gap-3 rounded-2xl border border-brand/30 bg-brand/5 px-5 py-3.5 text-left transition hover:border-brand-2/50 hover:bg-brand/10 md:max-w-xl"
+          >
+            <span className="flex items-center gap-3">
+              <span className="brand-gradient flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-white">
+                <Network className="h-4 w-4" aria-hidden />
+              </span>
+              <span>
+                <span className="block text-sm font-semibold text-text">
+                  Ever wondered how the web actually works?
+                </span>
+                <span className="block text-xs text-muted">
+                  Watch one request travel from your device to the server — and back.
+                </span>
+              </span>
+            </span>
+            <ArrowRight className="h-4 w-4 shrink-0 text-brand-2 transition group-hover:translate-x-0.5" aria-hidden />
+          </button>
 
           <a
             href={profile.resumeUrl}
