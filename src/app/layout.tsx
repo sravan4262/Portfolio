@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { ModeProvider } from "@/lib/mode-context";
 import { AudioProvider } from "@/lib/audio-context";
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ModeProvider>
           <AudioProvider>{children}</AudioProvider>
         </ModeProvider>
+        <Analytics />
       </body>
     </html>
   );
