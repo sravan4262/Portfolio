@@ -353,16 +353,23 @@ export default function RequestJourneyConstellation({ onClose }: { onClose: () =
         const seg = (u: number) => qp(a, cp, b, u);
         const g = (x: number, y: number, r: number, col: string, gl = 8) => { ctx.shadowColor = col; ctx.shadowBlur = gl; ctx.fillStyle = col; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); ctx.shadowBlur = 0; };
 
-        /* caption: what this edge carries — set just outside the ring */
+        /* caption: what this edge carries — set inside the ring, where it's empty
+           (node labels live outside, so the two can never collide) */
         if (caption && W >= 640) {
           const mc = seg(0.5);
-          const dx = mc.x - ccx, dy = mc.y - ccy; const len = Math.hypot(dx, dy) || 1;
-          const lx = mc.x + (dx / len) * 20, ly = mc.y + (dy / len) * 20;
           ctx.font = `600 8.5px ${MONO}`; ctx.textBaseline = "middle";
-          ctx.textAlign = dx / len > 0.35 ? "left" : dx / len < -0.35 ? "right" : "center";
           ctx.fillStyle = hexA(C.muted, 0.75);
-          ctx.fillText(caption, lx, ly);
-          ctx.textAlign = "center";
+          if (i === RING - 1) {
+            /* the edge into the center: offset perpendicular to the line instead */
+            ctx.textAlign = "center";
+            ctx.fillText(caption, mc.x + Math.cos(dir + Math.PI / 2) * 14, mc.y + Math.sin(dir + Math.PI / 2) * 14);
+          } else {
+            const dx = mc.x - ccx, dy = mc.y - ccy; const len = Math.hypot(dx, dy) || 1;
+            const lx = mc.x - (dx / len) * 26, ly = mc.y - (dy / len) * 26;
+            ctx.textAlign = dx / len > 0.35 ? "right" : dx / len < -0.35 ? "left" : "center";
+            ctx.fillText(caption, lx, ly);
+            ctx.textAlign = "center";
+          }
         }
 
         if (kind === "waves") {
@@ -528,7 +535,7 @@ export default function RequestJourneyConstellation({ onClose }: { onClose: () =
       <div className="relative flex items-center justify-between gap-3 border-b border-line px-5 py-3">
         <div className="min-w-0">
           <h2 className="truncate text-base font-bold text-text sm:text-lg">Anatomy of a Request · one YouTube click</h2>
-          <p className="truncate text-xs text-muted">23 nodes, there and back — click any node to see what happens there. ← → to walk the ring.</p>
+          <p className="truncate text-xs text-muted">23 nodes, there and back — the blue comet is your click making the round trip. Click any node · ← → walks the ring.</p>
         </div>
         <button onClick={onClose} aria-label="Close" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-panel text-muted transition hover:border-brand-2/50 hover:text-text">
           <X className="h-4 w-4" />
@@ -537,12 +544,6 @@ export default function RequestJourneyConstellation({ onClose }: { onClose: () =
 
       <div ref={wrapRef} className="dot-grid relative flex-1 overflow-hidden">
         <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-
-        {sel === null && (
-          <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full border border-line bg-panel/90 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-muted backdrop-blur">
-            ✦ the blue comet is your click making the round trip
-          </div>
-        )}
 
         <AnimatePresence>
           {sel !== null && (
