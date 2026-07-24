@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/fun-tour", "destination": "/index.html" },
+    { "source": "/recruiter-mode", "destination": "/index.html" }
+  ]
+}

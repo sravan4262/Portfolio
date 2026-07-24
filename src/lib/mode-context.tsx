@@ -16,6 +16,15 @@ type ModeState = {
 
 const STORAGE_KEY = "pipeline-mode";
 
+/* Vercel Web Analytics buckets page views by URL path. This app never does a
+   real navigation (it's one static export, mode lives in React state), so
+   without this every visitor would show up as a single "/" row and the
+   dashboard couldn't tell a "fun tour" click from a "recruiter mode" click.
+   Pushing a distinct, fake path via the History API — with no page reload —
+   is a free, no-Pro-plan way to make those two journeys show up as separate
+   rows in the Pages panel. See mode-context.md discussion 2026-07-24. */
+const MODE_PATH: Record<Mode, string> = { fun: "/fun-tour", boring: "/recruiter-mode" };
+
 const ModeContext = createContext<ModeState | undefined>(undefined);
 
 export function ModeProvider({ children }: { children: ReactNode }) {
@@ -25,7 +34,11 @@ export function ModeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved === "fun" || saved === "boring") setModeState(saved);
+      if (saved === "fun" || saved === "boring") {
+        setModeState(saved);
+        // restoring on reload — replace, don't push, so back button still works
+        window.history.replaceState(null, "", MODE_PATH[saved]);
+      }
     } catch {
       /* ignore */
     }
@@ -39,6 +52,7 @@ export function ModeProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
+    window.history.pushState(null, "", MODE_PATH[m]);
   };
 
   const goHome = () => {
@@ -48,6 +62,7 @@ export function ModeProvider({ children }: { children: ReactNode }) {
     } catch {
       /* ignore */
     }
+    window.history.pushState(null, "", "/");
   };
 
   return (
