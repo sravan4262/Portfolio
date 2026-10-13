@@ -65,7 +65,7 @@ export const profile = {
     { value: "FedRAMP High", label: "cloud infra at Citrix today" },
     { value: "3 clouds", label: "Azure · AWS · GCP, in prod" },
     { value: "2 live apps", label: "solo-built · +1 co-founded" },
-    { value: "~$44K/yr", label: "cloud cost cut at Citrix" },
+    { value: "~$54K/yr", label: "cloud cost cut at Citrix" },
     { value: ">98% faster", label: "search rebuilt on Azure AI" },
   ],
 };
@@ -220,21 +220,21 @@ export const stages: Stage[] = [
     summary:
       "Where I am now — building multi-cloud, FedRAMP High infrastructure, and teaching LLMs to do the security busywork.",
     highlights: [
-      "Lead architecture/design reviews & cross-team technical decisions",
+      "Helped take the platform to FedRAMP High production-ready; fixed 4 security vulns ahead of SLA",
       "Cut ~$20K/yr moving 4 Windows VMs → lightweight Linux K8s pods",
-      "Daily pipeline recovers ~$24K/yr in orphaned Azure image storage",
-      "Policy deploys: multi-hour weekly manual → one-click Jenkins pipeline",
+      "Image cleanup automation: managed-image cost down 97%, ~$34K/yr saved",
+      "Policy deploys ~60 min → under 10; Splunk alerts & dashboards as code",
       "Built AI security-triage that auto-files Jira tickets",
-      "Multi-cloud (Azure/AWS/GCP) infra to FedRAMP High standards",
+      "Lead architecture reviews; delivered RegScale asset-inventory PoC",
     ],
     about:
-      "Multi-cloud (Azure / AWS / GCP) infrastructure for FedRAMP High systems. Drove cost optimization — migrated 4 Windows VMs to lightweight Linux Kubernetes pods (~$20K/yr) and built a daily pipeline that recovers ~$24K/yr in orphaned image storage. Automated Azure Policy enforcement via a Jenkins pipeline (multi-hour weekly process → one click) and built AI tooling for security triage and incident summarization.",
+      "Multi-cloud (Azure / AWS / GCP) infrastructure for FedRAMP High systems. Drove cost optimization — migrated 4 Windows VMs to lightweight Linux Kubernetes pods (~$20K/yr) and built scheduled cleanup jobs for orphaned managed images and Compute Gallery versions (managed-image cost down 97%, ~$34K/yr). Automated Azure Policy as code via Jenkins (~60 min → under 10 per update), moved Splunk to push-based ingestion with dashboards and alerts deployed as code, helped bring the platform to FedRAMP High production-ready, and built AI tooling for security triage and incident summarization.",
     tech: [
       { name: "Azure / AWS / GCP", why: "Multi-cloud platform engineering" },
       { name: "Kubernetes", why: "Cost + scaling over VMs" },
       { name: "Terraform", why: "Auditable infra for FedRAMP" },
       { name: "C# / PowerShell", why: "Azure automation" },
-      { name: "Jenkins", why: "One-click policy deploys" },
+      { name: "Jenkins / TeamCity", why: "Policy as code; scheduled cost cleanup" },
       { name: "Azure OpenAI", why: "Vuln triage → auto-Jira; ops summaries" },
       { name: "Splunk Cloud (HEC)", why: "Push-based telemetry" },
     ],
